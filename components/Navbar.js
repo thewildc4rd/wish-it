@@ -1,7 +1,6 @@
 'use client';
 
-import { AuthContext } from '@/authentication/AuthContext';
-import { logOut } from '@/authentication/AuthUtils';
+import { logOut } from '@/authentication/authUtils';
 import Link from 'next/link';
 import React, { useContext, useState } from 'react';
 import { useAuth } from '@/authentication/AuthContext';
