@@ -2,7 +2,7 @@
 
 import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { logIn } from '@/utils/auth';
+import { logIn } from '@/authentication/AuthUtils';
 
 const LogInForm = (props) => {
   const router = useRouter();

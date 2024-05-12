@@ -1,10 +1,10 @@
 'use client';
 
-import { AuthContext } from '@/utils/AuthContext';
-import { logOut } from '@/utils/auth';
+import { AuthContext } from '@/authentication/AuthContext';
+import { logOut } from '@/authentication/AuthUtils';
 import Link from 'next/link';
 import React, { useContext, useState } from 'react';
-import { useAuth } from '@/utils/AuthContext';
+import { useAuth } from '@/authentication/AuthContext';
 import { useRouter } from 'next/navigation';
 
 const Navbar = (props) => {

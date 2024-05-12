@@ -2,7 +2,7 @@
 
 import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { signUp } from '@/utils/auth';
+import { signUp } from '@/authentication/AuthUtils';
 
 const SignUpForm = (props) => {
   const router = useRouter();
