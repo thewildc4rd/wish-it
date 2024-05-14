@@ -20,9 +20,11 @@ const Navbar = (props) => {
           >
             Wish it
           </Link>
-          <Link href={'/my-lists'} className='font-medium text-lg'>
-            My lists
-          </Link>
+          {userLoggedIn && (
+            <Link href={'/my-lists'} className='font-medium text-lg'>
+              My lists
+            </Link>
+          )}
         </div>
 
         {userLoggedIn && (
