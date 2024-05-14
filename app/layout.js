@@ -3,6 +3,8 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { AuthProvider } from '@/authentication/AuthContext';
+import { ThemeProvider } from '@mui/material/styles';
+import { theme } from '@/config/theme';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,9 +18,11 @@ export default function RootLayout({ children }) {
     <html lang='en'>
       <body className={inter.className}>
         <AuthProvider>
-          <Navbar />
-          <div className='flex-1'>{children}</div>
-          <Footer />
+          <ThemeProvider theme={theme}>
+            <Navbar />
+            <div className='flex-1'>{children}</div>
+            <Footer />
+          </ThemeProvider>
         </AuthProvider>
       </body>
     </html>

@@ -2,14 +2,12 @@
 import DefaultImage from '@/components/DefaultImage';
 import { auth } from '@/config/firebase';
 import { addList } from '@/utils/databaseUtils';
-import { Box, Button, Grid, MenuItem, TextField } from '@mui/material';
+import { Box, Button, FormControlLabel, Grid, MenuItem, Switch, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const NewList = (props) => {
   const router = useRouter();
-  const [title, setTitle] = useState('');
-  const [isPublic, setIsPublic] = useState(true);
   const [image, setImage] = useState('');
 
   const handleUploadImage = (e) => {
@@ -30,10 +28,12 @@ const NewList = (props) => {
   const onSumbit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
+    console.log(formData.get('public'));
+
     const data = {
       creatorId: auth.currentUser.uid,
       title: formData.get('title'),
-      public: formData.get('public'),
+      public: 'true' === formData.get('public'),
       image,
     };
     addList(data).then(() => {
@@ -46,17 +46,7 @@ const NewList = (props) => {
       <h1 className='text-4xl font-semibold text-center p-10'>New List</h1>
       <Box component='form' onSubmit={onSumbit} noValidate>
         <Grid width={'384px'} container flexDirection='column' gap={'20px'} flex={1}>
-          <TextField
-            required
-            label='Title'
-            name='title'
-            id='title'
-            variant='outlined'
-            value={title}
-            onChange={(e) => {
-              setTitle(e.target.value);
-            }}
-          />
+          <TextField required label='Title' name='title' id='title' variant='outlined' />
           {image && (
             <Box
               component='img'
@@ -72,15 +62,7 @@ const NewList = (props) => {
             Upload File
             <input type='file' accept='.jpg, .jpeg, .png' hidden />
           </Button>
-          <TextField
-            label={'Visability'}
-            name='public'
-            id='public'
-            select
-            defaultValue={true}
-            value={isPublic}
-            onChange={(e) => setIsPublic(e.target.value)}
-          >
+          <TextField label={'Visability'} name='public' id='public' select defaultValue={true}>
             {[
               { label: 'Public', value: true },
               { label: 'Private', value: false },
@@ -90,7 +72,9 @@ const NewList = (props) => {
               </MenuItem>
             ))}
           </TextField>
-          <Button type='submit'>Submit</Button>
+          <Button type='submit' variant='contained'>
+            Submit
+          </Button>
         </Grid>
       </Box>
     </main>

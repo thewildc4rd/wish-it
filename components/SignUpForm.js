@@ -4,6 +4,7 @@ import React, { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signUp } from '@/authentication/authUtils';
 import { addUser } from '@/utils/databaseUtils';
+import { Button, TextField } from '@mui/material';
 
 const SignUpForm = (props) => {
   const router = useRouter();
@@ -13,67 +14,64 @@ const SignUpForm = (props) => {
   const [last, setLast] = useState('');
   const [errMsg, setErrMsg] = useState('');
 
+  const onSubmit = () => {
+    try {
+      signUp(email, password).then((res) => {
+        addUser(res.user.uid, { first, last, email }).then(() => {
+          router.push('/');
+        });
+      });
+    } catch (err) {
+      setErrMsg('Invalid email or password');
+    }
+  };
+
   return (
-    <div className='flex flex-col gap-2 w-96'>
-      <div className='font-semibold'>First name</div>
-      <input
-        className={`${
-          first ? 'bg-pink-100  border-pink-200' : 'border-slate-100 bg-slate-50'
-        } border-2 p-2 px-4 rounded-lg text-gray-700 transition-all`}
-        placeholder='First name'
+    <div className='flex flex-col gap-4 w-96'>
+      <TextField
+        required
+        label='First name'
+        variant='outlined'
+        value={first}
         onChange={(e) => {
           setFirst(e.target.value);
           setErrMsg('');
         }}
       />
-      <div className='font-semibold'>Last name</div>
-      <input
-        className={`${
-          last ? 'bg-pink-100  border-pink-200' : 'border-slate-100 bg-slate-50'
-        } border-2 p-2 px-4 rounded-lg text-gray-700 transition-all`}
-        placeholder='Last name'
+      <TextField
+        required
+        label='Last name'
+        variant='outlined'
+        value={last}
         onChange={(e) => {
           setLast(e.target.value);
           setErrMsg('');
         }}
       />
-      <div className='font-semibold'>Email</div>
-      <input
-        className={`${
-          email ? 'bg-pink-100  border-pink-200' : 'border-slate-100 bg-slate-50'
-        } border-2 p-2 px-4 rounded-lg text-gray-700 transition-all`}
-        placeholder='Email'
+      <TextField
+        required
+        label='Email'
+        variant='outlined'
+        value={email}
         onChange={(e) => {
           setEmail(e.target.value);
           setErrMsg('');
         }}
       />
-      <div className='font-semibold mt-2'>Password</div>
-      <input
-        className={`${
-          password ? 'bg-pink-100  border-pink-200' : 'border-slate-100 bg-slate-50'
-        } border-2 p-2 px-4 rounded-lg text-gray-700 transition-all`}
-        placeholder='Password'
+      <TextField
+        required
+        label='Password'
         type='password'
+        variant='outlined'
+        value={password}
         onChange={(e) => {
           setPassword(e.target.value);
           setErrMsg('');
         }}
       />
-      <button
-        className='bg-pink-500 text-white py-2 rounded-lg mt-2 hover:shadow-lg transition-all'
-        onClick={async () => {
-          try {
-            const res = await signUp(email, password);
-            await addUser(res.user.uid, { first, last, email });
-            router.push('/');
-          } catch (err) {
-            setErrMsg('Invalid email or password');
-          }
-        }}
-      >
+      <Button variant='contained' onClick={onSubmit}>
         Sign Up
-      </button>
+      </Button>
       <div className='text-red-700 text-center'>{errMsg}</div>
 
       <div className='text-center py-2'>

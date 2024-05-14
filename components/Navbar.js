@@ -16,7 +16,7 @@ const Navbar = (props) => {
         <div className=' mr-auto flex gap-x-6 items-center'>
           <Link
             href={'/'}
-            className='text-2xl bg-pink-700 text-white p-2 px-3 rounded-2xl font-semibold'
+            className='text-2xl bg-secondary text-white p-2 px-3 rounded-2xl font-semibold'
           >
             Wish it
           </Link>

@@ -16,14 +16,16 @@ const PublicListCard = ({ list, forMyList }) => {
 
   return (
     <div className='h-full bg-gray-100 p-4 rounded-lg shadow-lg cursor-pointer'>
-      <h3 className='text-xl font-semibold' onClick={() => router.push(`/${list.id}`)}>
-        {list.title}
-      </h3>
-      {!forMyList && (
-        <h4 className='text-base mb-5'>
-          <span className='font-medium'>Creator:</span> {creator}
-        </h4>
-      )}
+      <div className='flex flex-col mb-3'>
+        <h3 className='text-xl font-semibold' onClick={() => router.push(`/${list.id}`)}>
+          {list.title}
+        </h3>
+        {!forMyList && (
+          <h4 className='text-base'>
+            <span className='font-medium'>Creator:</span> {creator}
+          </h4>
+        )}
+      </div>
       {list.image && (
         <Box
           component='img'

@@ -1,10 +1,12 @@
 'use client';
-import HamburgerIcon from '@/components/HamburgerIcon';
 import ListCard from '@/components/ListCard';
 import { auth } from '@/config/firebase';
 import { getCollection } from '@/utils/databaseUtils';
+import { Button } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const MyLists = (props) => {
   const router = useRouter();
@@ -29,22 +31,20 @@ const MyLists = (props) => {
         <div className='flex flex-col h-full w-full p-10 pt-5'>
           <div className='flex flex-row items-center mb-7 '>
             <div className='flex flex-row items-center gap-3 mr-auto'>
-              <button
-                className=' bg-pink-700 p-2 rounded-lg'
+              <Button
+                variant='contained'
+                color='secondary'
                 onClick={() => setSidebarOpen(!sidebarOpen)}
               >
-                <HamburgerIcon />
-              </button>
-              <button
-                className='bg-pink-600 p-2 rounded-lg text-white'
-                onClick={() => router.push('/new-list')}
-              >
+                {sidebarOpen ? <MenuOpenIcon /> : <MenuIcon />}
+              </Button>
+              <Button variant='contained' onClick={() => router.push('/new-list')}>
                 Add List
-              </button>
+              </Button>
             </div>
             <h1 className='text-4xl font-semibold text-center mr-auto'>My Lists</h1>
           </div>
-          <div className='flex flex-row gap-4'>
+          <div className='flex flex-row gap-4 flex-wrap'>
             {lists.map((list) => (
               <ListCard list={list} forMyList={true} key={list.id} />
             ))}
