@@ -1,9 +1,13 @@
 'use client';
 import DefaultImage from '@/components/DefaultImage';
-import { Box, Button, MenuItem, TextField } from '@mui/material';
+import { auth } from '@/config/firebase';
+import { addList } from '@/utils/databaseUtils';
+import { Box, Button, Grid, MenuItem, TextField } from '@mui/material';
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const NewList = (props) => {
+  const router = useRouter();
   const [title, setTitle] = useState('');
   const [isPublic, setIsPublic] = useState(true);
   const [image, setImage] = useState('');
@@ -23,50 +27,72 @@ const NewList = (props) => {
     };
   };
 
+  const onSumbit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const data = {
+      creatorId: auth.currentUser.uid,
+      title: formData.get('title'),
+      public: formData.get('public'),
+      image,
+    };
+    addList(data).then(() => {
+      router.push('/my-lists');
+    });
+  };
+
   return (
     <main className='flex flex-col items-center min-h-screen'>
       <h1 className='text-4xl font-semibold text-center p-10'>New List</h1>
-      <div className='flex flex-col w-96 gap-5'>
-        <TextField
-          label='Title'
-          variant='outlined'
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-        />
-        <TextField
-          label={'Visability'}
-          id='outlined-select-currency'
-          select
-          defaultValue={true}
-          value={isPublic}
-        >
-          {[
-            { label: 'Public', value: true },
-            { label: 'Private', value: false },
-          ].map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
-        {image && (
-          <Box
-            component='img'
-            className='rounded-lg'
-            src={image}
-            width={'100%'}
-            height={'384px'}
-            sx={{ borderRadius: '25px', objectFit: 'cover' }}
+      <Box component='form' onSubmit={onSumbit} noValidate>
+        <Grid width={'384px'} container flexDirection='column' gap={'20px'} flex={1}>
+          <TextField
+            required
+            label='Title'
+            name='title'
+            id='title'
+            variant='outlined'
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
           />
-        )}
-        {!image && <DefaultImage height={'384px'} />}
-        <Button variant='contained' component='label' onChange={handleUploadImage}>
-          Upload File
-          <input type='file' accept='.jpg, .jpeg, .png' hidden />
-        </Button>
-      </div>
+          {image && (
+            <Box
+              component='img'
+              className='rounded-lg'
+              src={image}
+              width={'100%'}
+              height={'384px'}
+              sx={{ objectFit: 'cover' }}
+            />
+          )}
+          {!image && <DefaultImage height={'384px'} />}
+          <Button variant='outlined' component='label' onChange={handleUploadImage}>
+            Upload File
+            <input type='file' accept='.jpg, .jpeg, .png' hidden />
+          </Button>
+          <TextField
+            label={'Visability'}
+            name='public'
+            id='public'
+            select
+            defaultValue={true}
+            value={isPublic}
+            onChange={(e) => setIsPublic(e.target.value)}
+          >
+            {[
+              { label: 'Public', value: true },
+              { label: 'Private', value: false },
+            ].map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+          <Button type='submit'>Submit</Button>
+        </Grid>
+      </Box>
     </main>
   );
 };

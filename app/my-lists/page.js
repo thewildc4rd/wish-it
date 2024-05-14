@@ -1,6 +1,6 @@
 'use client';
 import HamburgerIcon from '@/components/HamburgerIcon';
-import MyListCard from '@/components/MyListCard';
+import ListCard from '@/components/ListCard';
 import { auth } from '@/config/firebase';
 import { getCollection } from '@/utils/databaseUtils';
 import { useRouter } from 'next/navigation';
@@ -46,7 +46,7 @@ const MyLists = (props) => {
           </div>
           <div className='flex flex-row gap-4'>
             {lists.map((list) => (
-              <MyListCard list={list} key={list.id} />
+              <ListCard list={list} forMyList={true} key={list.id} />
             ))}
           </div>
         </div>

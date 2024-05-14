@@ -1,6 +1,6 @@
 'use client';
 
-import PublicListCard from '@/components/PublicListCard';
+import ListCard from '@/components/ListCard';
 import { getCollection } from '@/utils/databaseUtils';
 import React, { useEffect, useState } from 'react';
 
@@ -19,7 +19,7 @@ export default function Home() {
       <h1 className='text-4xl font-semibold text-center mb-5'>Public Lists</h1>
       <div className='flex flex-row gap-4'>
         {lists.map((list) => (
-          <PublicListCard list={list} key={list.id} />
+          <ListCard list={list} forMyList={false} key={list.id} />
         ))}
       </div>
     </main>

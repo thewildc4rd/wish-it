@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import DefaultImage from './DefaultImage';
 import { Box } from '@mui/material';
 
-const PublicListCard = ({ list }) => {
+const PublicListCard = ({ list, forMyList }) => {
   const [creator, setCreator] = useState('');
   const router = useRouter();
 
@@ -19,18 +19,30 @@ const PublicListCard = ({ list }) => {
       <h3 className='text-xl font-semibold' onClick={() => router.push(`/${list.id}`)}>
         {list.title}
       </h3>
-      <h4 className='text-base mb-5'>Creator: {creator}</h4>
+      {!forMyList && (
+        <h4 className='text-base mb-5'>
+          <span className='font-medium'>Creator:</span> {creator}
+        </h4>
+      )}
       {list.image && (
         <Box
           component='img'
-          className='rounded-lg'
+          className='rounded-lg cursor-pointer'
           src={list.image}
           width={'240px'}
           height={'240px'}
           sx={{ objectFit: 'cover' }}
+          onClick={() => router.push(`/${list.id}`)}
         />
       )}
-      {!list.image && <DefaultImage height={'240px'} width={'240px'} />}
+      {!list.image && (
+        <DefaultImage
+          className={'cursor-pointer'}
+          height={'240px'}
+          width={'240px'}
+          onClick={() => router.push(`/${list.id}`)}
+        />
+      )}
     </div>
   );
 };
