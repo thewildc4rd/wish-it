@@ -12,10 +12,18 @@ const Navbar = (props) => {
 
   return (
     <nav className='w-full h-10 flex justify-center gap-6 items-center p-10 bg-slate-50'>
-      <div className='flex justify-end gap-x-6 items-center flex-wrap flex-1'>
-        <Link href={'/'} className='text-3xl text-rw-orange font-semibold mr-auto'>
-          Wish it
-        </Link>
+      <div className='flex gap-x-6 items-center flex-wrap w-full'>
+        <div className=' mr-auto flex gap-x-6 items-center'>
+          <Link
+            href={'/'}
+            className='text-2xl bg-pink-700 text-white p-2 px-3 rounded-2xl font-semibold'
+          >
+            Wish it
+          </Link>
+          <Link href={'/my-lists'} className='font-medium text-lg'>
+            My lists
+          </Link>
+        </div>
 
         {userLoggedIn && (
           <button

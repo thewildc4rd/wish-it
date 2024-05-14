@@ -1,16 +1,27 @@
 'use client';
 
-import { getUsers } from '@/utils/databaseUtils';
+import PublicListCard from '@/components/PublicListCard';
+import { getCollection } from '@/utils/databaseUtils';
 import React, { useEffect, useState } from 'react';
 
 export default function Home() {
-  // const [users, setUsers] = useState([]);
+  const [lists, setLists] = useState([]);
 
-  // useEffect(() => {
-  //   getUsers().then((users) => {
-  //     setUsers(users);
-  //   });
-  // }, []);
+  useEffect(() => {
+    getCollection('lists').then((lists) => {
+      const publicLists = lists.filter((list) => list.public);
+      setLists(publicLists);
+    });
+  }, []);
 
-  return <main className='flex min-h-screen flex-col items-center p-24'></main>;
+  return (
+    <main className='flex flex-col min-h-screen p-10'>
+      <h1 className='text-4xl font-semibold text-center mb-5'>Public Lists</h1>
+      <div className='flex flex-row gap-4'>
+        {lists.map((list) => (
+          <PublicListCard list={list} key={list.id} />
+        ))}
+      </div>
+    </main>
+  );
 }

@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { logIn } from '@/authentication/authUtils';
-import { getUsers } from '@/utils/databaseUtils';
 
 const LogInForm = (props) => {
   const router = useRouter();
