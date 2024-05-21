@@ -28,7 +28,6 @@ const NewList = (props) => {
   const onSumbit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    console.log(formData.get('public'));
 
     const data = {
       creatorId: auth.currentUser.uid,

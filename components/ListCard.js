@@ -25,6 +25,9 @@ const PublicListCard = ({ list, forMyList }) => {
             <span className='font-medium'>Creator:</span> {creator}
           </h4>
         )}
+        <h4 className='text-base'>
+          {list.items.length} {list.items.length != 1 ? 'items' : 'item'}
+        </h4>
       </div>
       {list.image && (
         <Box

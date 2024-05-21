@@ -1,14 +1,14 @@
 'use client';
 
 import ListCard from '@/components/ListCard';
-import { getCollection } from '@/utils/databaseUtils';
+import { getCollection, getListsWithItems } from '@/utils/databaseUtils';
 import React, { useEffect, useState } from 'react';
 
 export default function Home() {
   const [lists, setLists] = useState([]);
 
   useEffect(() => {
-    getCollection('lists').then((lists) => {
+    getListsWithItems().then((lists) => {
       const publicLists = lists.filter((list) => list.public == true);
       setLists(publicLists);
     });
